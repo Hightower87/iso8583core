@@ -6,16 +6,16 @@ ISOBitMapPackager::ISOBitMapPackager() {}
 ISOBitMapPackager::ISOBitMapPackager(int len, std::string description) : ISOFieldPackagerBase(len, description) {}
 ISOBitMapPackager::~ISOBitMapPackager() {}
 
-ISOField* ISOBitMapPackager::createComponent(int fieldNumber) {
-	return new ISOBitMap();
+boost::shared_ptr<ISOField> ISOBitMapPackager::createComponent(int fieldNumber) {
+	return boost::shared_ptr<ISOField>(new ISOBitMap());
 }
 
 int ISOBitMapPackager::getMaxPackedLength() {
 	return getLength() >> 3;
 }
 
-std::string ISOBitMapPackager::pack (ISOField* c) {
-	ISOBitMap* bitmap = dynamic_cast<ISOBitMap*>(c);
+std::string ISOBitMapPackager::pack (boost::shared_ptr<ISOField> c) {
+	boost::shared_ptr<ISOBitMap> bitmap = boost::dynamic_pointer_cast<ISOBitMap>(c);
 	if(c == NULL) {
 		return "";
 	}
@@ -38,7 +38,7 @@ std::string ISOBitMapPackager::pack (ISOField* c) {
     return s_bitmap;
 }
 
-int ISOBitMapPackager::unpack(ISOField* c, std::string b, int offset) {
+int ISOBitMapPackager::unpack(boost::shared_ptr<ISOField> c, std::string b, int offset) {
 	std::string s_bitmap = "";
 	if(b[offset] & 0x80) {
 		s_bitmap = b.substr(offset, 16);

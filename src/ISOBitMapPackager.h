@@ -10,9 +10,9 @@ public:
 	ISOBitMapPackager(int len, std::string description);
 	virtual ~ISOBitMapPackager();
 
-	virtual ISOField* createComponent(int fieldNumber);
+	virtual boost::shared_ptr<ISOField> createComponent(int fieldNumber);
 	int getMaxPackedLength();
-    virtual std::string pack (ISOField* c);
-    virtual int unpack (ISOField* c, std::string b, int offset);
+    virtual std::string pack (boost::shared_ptr<ISOField> c);
+    virtual int unpack (boost::shared_ptr<ISOField> c, std::string b, int offset);
 };
 

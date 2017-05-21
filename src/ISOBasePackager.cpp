@@ -16,8 +16,7 @@ std::string ISOBasePackager::getFieldDescription(ISOMsg* m, int fldNumber) {
 }
 
 boost::shared_ptr<ISOFieldPackagerBase> ISOBasePackager::getFieldPackager (int fldNumber) {
-	//return (unsigned int)fldNumber < fieldPackagers.size() ? fieldPackagers[fldNumber] : NULL;
-	return fieldPackagers[fldNumber];
+	return (unsigned int)fldNumber < fieldPackagers.size() ? fieldPackagers[fldNumber] : boost::shared_ptr<ISOFieldPackagerBase>();
 }
 
 void ISOBasePackager::setFieldPackager(int fldNumber, boost::shared_ptr<ISOFieldPackagerBase> fieldPackager) {
@@ -76,7 +75,7 @@ int ISOBasePackager::unpack(ISOMsg* m, std::string b) {
 			if((unsigned int)consumed >= b.size())
 				break;
 
-			ISOField* field = fieldPackagers[i]->createComponent(i);
+			boost::shared_ptr<ISOField> field = fieldPackagers[i]->createComponent(i);
 			int fieldSize = fieldPackagers[i]->unpack(field, b, consumed);
 			if(fieldSize > 0) {
 				printf("Field [%d] [size:%d] (%s)\n", field->getFieldNumber(), fieldSize, fieldPackagers[i]->getDescription().c_str());

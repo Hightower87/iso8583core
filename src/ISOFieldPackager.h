@@ -17,8 +17,8 @@ public:
 	virtual ~ISOFieldPackager();
 
     virtual int getMaxPackedLength();
-    virtual std::string pack (ISOField* c);
-    virtual int unpack (ISOField* c, std::string b, int offset);
+    virtual std::string pack (boost::shared_ptr<ISOField> c);
+    virtual int unpack (boost::shared_ptr<ISOField> c, std::string b, int offset);
 
 protected:
     Padder *padder;

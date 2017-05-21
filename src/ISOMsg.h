@@ -8,7 +8,7 @@ class ISOField;
 
 class ISOMsg {
 public:
-	typedef std::map<int, ISOField*> ISOFieldMap;
+	typedef std::map<int, boost::shared_ptr<ISOField> > ISOFieldMap;
 
 	ISOMsg();
 	virtual ~ISOMsg();
@@ -17,13 +17,13 @@ public:
 	std::string getMTI();
 	void setPackager(boost::shared_ptr<ISOBasePackager> p);
 	boost::shared_ptr<ISOBasePackager> getPackager();
-	void set(ISOField* c);
+	void set(boost::shared_ptr<ISOField> c);
 	void set(int fldno, std::string value = "");
 	void unset(int fldno);
 	bool hasField(int fldno);
 	std::string pack();
 	int unpack(std::string b);
-	ISOField* getField(int fldno);
+	boost::shared_ptr<ISOField> getField(int fldno);
 	std::string getValue(int fldno);
 	bool isRequest();
 	bool isResponse();

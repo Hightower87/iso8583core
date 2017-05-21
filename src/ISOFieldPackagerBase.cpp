@@ -21,11 +21,11 @@ void ISOFieldPackagerBase::setLength(int len) {
 	this->len = len;
 }
 
-ISOField* ISOFieldPackagerBase::createComponent(int fldno) {
-	return new ISOField (fldno);
+boost::shared_ptr<ISOField> ISOFieldPackagerBase::createComponent(int fldno) {
+	return boost::shared_ptr<ISOField>(new ISOField (fldno));
 }
 
-ISOField* ISOFieldPackagerBase::createComponent(int fldno, std::string value) {
-	return new ISOField (fldno, value);
+boost::shared_ptr<ISOField> ISOFieldPackagerBase::createComponent(int fldno, std::string value) {
+	return boost::shared_ptr<ISOField>(new ISOField (fldno, value));
 }
 

@@ -16,7 +16,7 @@ int ISOFieldPackager::getMaxPackedLength() {
 	return prefixer->getPackedLength() + interpreter->getPackedLength(getLength());
 }
 
-std::string ISOFieldPackager::pack(ISOField* c) {
+std::string ISOFieldPackager::pack(boost::shared_ptr<ISOField> c) {
 	std::string data = "";
 	std::string fielddata = c->getValue();
 
@@ -29,7 +29,7 @@ std::string ISOFieldPackager::pack(ISOField* c) {
 	return data;
 }
 
-int ISOFieldPackager::unpack(ISOField* c, std::string b, int offset) {
+int ISOFieldPackager::unpack(boost::shared_ptr<ISOField> c, std::string b, int offset) {
 	int len = prefixer->decodeLength(b, offset);
 	if (len == 0) {
 		len = interpreter->getPackedLength(getLength());
