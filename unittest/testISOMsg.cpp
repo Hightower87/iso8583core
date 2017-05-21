@@ -34,3 +34,19 @@ TEST_F(testISOMsg, unpack) {
 	ASSERT_STREQ(msg.getValue(2).c_str(), "123456789");
 }
 
+TEST_F(testISOMsg, equality) {
+	ISOMsg msg;
+	msg.setPackager(boost::shared_ptr<ISOBasePackager>(new ISOPackager()));
+	msg.setMTI("0200");
+	msg.set(2, "123456789");
+	std::string out = msg.pack();
+
+	ISOMsg msg2;
+	msg2.setPackager(boost::shared_ptr<ISOBasePackager>(new ISOPackager()));
+	msg2.unpack(out);
+
+	ASSERT_STREQ(msg2.getValue(0).c_str(), "0200");
+	ASSERT_STREQ(msg2.getValue(2).c_str(), "123456789");
+	ASSERT_STREQ(msg2.pack().c_str(), msg.pack().c_str());
+}
+
